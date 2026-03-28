@@ -18,3 +18,19 @@ Building Steps:
 - You would then have to solder all of the components together
 - You then have to boot up the firmware
 - You can then finally plug it in and use
+Build Of Materials:
+| Name | Quantity | Price | Total | Link | Notes |
+| :--- | :---: | :--- | :--- | :--- | :--- |
+| XIAO RP2040 | 1 | $7.00 | $7.00 | [Link](https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html) | Microcontroller |
+| Cherry MX Switches | 8 | $1.50 | $12.00 | [Link](https://www.amazon.com/dp/B07K7Y5GKZ) | Mechanical switches |
+| Keycaps | 8 | $1.00 | $8.00 | [Link](https://www.amazon.com/dp/B09FMQHQH3) | 1u keycaps |
+| EC11 Rotary Encoder | 1 | $2.00 | $2.00 | [Link](https://www.amazon.com/dp/B07D3DF8TK) | With push button |
+| SSD1306 0.91 inch OLED | 1 | $4.00 | $4.00 | [Link](https://www.amazon.com/dp/B09C5K91H7) | I2C 128x32 |
+| 1N4148 Diodes | 10 | $0.50 | $0.50 | [Link](https://www.amazon.com/dp/B06XB1R2NK) | Signal diodes |
+| M3 Screws and Standoffs | 8 | $1.60 | $1.60 | [Link](https://www.amazon.com/dp/B07KDVTBG3) | 10mm length |
+| PCB Manufacturing | 5 | $15.00 | $15.00 | [Link](https://jlcpcb.com) | Order from JLCPCB |
+| 3D Printing Filament | 1 | $10.00 | $10.00 | [Link](https://www.amazon.com/dp/B01EKEMFQS) | PLA for case |
+| Soldering Iron Kit | 1 | $25.00 | $25.00 | [Link](https://www.amazon.com/dp/B07GJNKQ8X) | |
+| Solder Wire | 1 | $5.00 | $5.00 | [Link](https://www.amazon.com/dp/B075WB98FJ) | 60/40 rosin core |
+| USB-C Cable | 1 | $8.00 | $8.00 | [Link](https://www.amazon.com/dp/B07THFJ1J5) | |
+| **TOTAL** | | | **$98.10** | | |

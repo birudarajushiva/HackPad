@@ -36,6 +36,8 @@ After those issues are resolved, install a compatible CircuitPython release on t
 
 Validate startup, all eight key positions, press/release behavior, simultaneous keys, both encoder directions, and OLED feedback on the actual board. This documentation update does not claim those hardware checks have passed.
 
+The D4/D5 overlap is reproduced by an executable static check in the [pin ownership audit](docs/PIN_AUDIT.md), with a pinned tool version and hardware repair criteria.
+
 ## Reuse
 
 No repository-wide license is currently included. Confirm reuse permission before redistributing the design.

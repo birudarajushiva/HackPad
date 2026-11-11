@@ -1,36 +1,43 @@
-This is a custom 8-button macropad with a rotary dial along with an OLED display, which was built for the Blueprint mission for Hack Club.
-So what exactly does this do:
-- you get 8 programmable buttons which you can use to customize any shortcuts
-- you also get a rotary dial which you can customise ranging from controls such as volume
-- the functionali9ty of the OLED screen is to show which key was pressed
-- and further you can customize all the buttons useing the config.py file
-These are the parts needed:
-- 1x XIAO RP2040
-- 8x Cherry MX switches
-- 8x Keycaps
-- 1x EC11 Rotary Encoder
-- 1x SSD1306 0.91" OLED Display
-- 8x 1N4148 Diodes
-- M3 screws and standoffs
-Building Steps:
-- to build this, you need to order the pcb's from the Gerber files
-- The next step would be to 3d print out the case from the CAD files
-- You would then have to solder all of the components together
-- You then have to boot up the firmware
-- You can then finally plug it in and use
-Build Of Materials:
-| Name | Quantity | Price | Total | Link | Notes |
-| :--- | :---: | :--- | :--- | :--- | :--- |
-| XIAO RP2040 | 1 | $7.00 | $7.00 | [Link](https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html) | Microcontroller |
-| Cherry MX Switches | 8 | $1.50 | $12.00 | [Link](https://www.amazon.com/dp/B07K7Y5GKZ) | Mechanical switches |
-| Keycaps | 8 | $1.00 | $8.00 | [Link](https://www.amazon.com/dp/B09FMQHQH3) | 1u keycaps |
-| EC11 Rotary Encoder | 1 | $2.00 | $2.00 | [Link](https://www.amazon.com/dp/B07D3DF8TK) | With push button |
-| SSD1306 0.91 inch OLED | 1 | $4.00 | $4.00 | [Link](https://www.amazon.com/dp/B09C5K91H7) | I2C 128x32 |
-| 1N4148 Diodes | 10 | $0.50 | $0.50 | [Link](https://www.amazon.com/dp/B06XB1R2NK) | Signal diodes |
-| M3 Screws and Standoffs | 8 | $1.60 | $1.60 | [Link](https://www.amazon.com/dp/B07KDVTBG3) | 10mm length |
-| PCB Manufacturing | 5 | $15.00 | $15.00 | [Link](https://jlcpcb.com) | Order from JLCPCB |
-| 3D Printing Filament | 1 | $10.00 | $10.00 | [Link](https://www.amazon.com/dp/B01EKEMFQS) | PLA for case |
-| Soldering Iron Kit | 1 | $25.00 | $25.00 | [Link](https://www.amazon.com/dp/B07GJNKQ8X) | |
-| Solder Wire | 1 | $5.00 | $5.00 | [Link](https://www.amazon.com/dp/B075WB98FJ) | 60/40 rosin core |
-| USB-C Cable | 1 | $8.00 | $8.00 | [Link](https://www.amazon.com/dp/B07THFJ1J5) | |
-| **TOTAL** | | | **$98.10** | | |
+# HackPad
+### A programmable macropad, from PCB to enclosure to firmware
+
+An eight-key macropad design with an EC11 rotary encoder and a 128×32 SSD1306 OLED, built around the Seeed Studio XIAO RP2040 for Hack Club's Blueprint mission.
+
+This repository brings together the KiCad board and schematic, manufacturing exports, enclosure CAD, and CircuitPython firmware. **Treat it as a hardware prototype: the committed firmware needs the issues below resolved before a complete working build can be claimed.**
+
+## Explore the design
+
+- [PCB layout](PCB/Hackpad.kicad_pcb) and [schematic](PCB/Hackpad.kicad_sch): editable KiCad source.
+- [Gerber archive](PCB/gerbers.zip): fabrication export; review against the source before ordering.
+- [Enclosure source](CAD/SmartOledbyShiva.step): editable STEP assembly.
+- [Top](CAD/Oledtoptray.stl) and [bottom](CAD/Oledbottomtray.stl): printable enclosure meshes; physical fit requires verification.
+- [Firmware](firmware/main.py) and [shortcut configuration](firmware/config.py).
+- [Design screenshots](images/) and [bill of materials](BOM.csv).
+
+## Intended interaction
+
+The default mappings are Copy, Paste, Undo, Save, Cut, Select All, Switch, and Close. The display shows the selected action; the encoder is intended to control volume. Mappings live in `firmware/config.py`.
+
+## Hardware and assembly
+
+The design uses a XIAO RP2040, eight Cherry MX switches and keycaps, an EC11 encoder, an SSD1306 I²C OLED, matrix diodes, and M3 hardware. The historical BOM includes tooling and example supplier prices; it is not a current purchase quote. Its diode quantities differ from the original prose, so reconcile them with the schematic.
+
+Before fabrication, run KiCad electrical/design-rule checks, confirm footprints and pin assignments, and compare the Gerbers with the board. Review the enclosure dimensions before printing, then solder and inspect the assembly before applying USB power.
+
+## Firmware status and blockers
+
+Static inspection of the committed source found:
+
+- **Pin conflict:** D4/D5 are assigned to both OLED I²C and the key matrix. Resolve the pinout against the schematic before wiring or powering a build.
+- **Volume handling:** the configuration uses `Keycode.VOLUME_INCREMENT` and `Keycode.VOLUME_DECREMENT` through a keyboard HID object. Verify the library API and implement Consumer Control HID for volume.
+- **Runtime compatibility:** display initialization uses `displayio.I2CDisplay` and `display.show`; check compatibility with the selected CircuitPython release.
+
+After those issues are resolved, install a compatible CircuitPython release on the XIAO RP2040. Copy the HID, display-text, and SSD1306 display libraries and their dependencies to `CIRCUITPY/lib/`. Copy `firmware/config.py` to `CIRCUITPY/config.py` and `firmware/main.py` to `CIRCUITPY/code.py` so it starts automatically.
+
+Validate startup, all eight key positions, press/release behavior, simultaneous keys, both encoder directions, and OLED feedback on the actual board. This documentation update does not claim those hardware checks have passed.
+
+The D4/D5 overlap is reproduced by an executable static check in the [pin ownership audit](docs/PIN_AUDIT.md), with a pinned tool version and hardware repair criteria.
+
+## Reuse
+
+No repository-wide license is currently included. Confirm reuse permission before redistributing the design.
